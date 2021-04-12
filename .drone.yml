@@ -1,0 +1,31 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: wasm
+    image: rust:latest
+    pull: if-not-exists
+    environment:
+      RUST_BACKTRACE: 1
+    commands:
+      - curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh -s -- -f
+      - wasm-pack build
+      - wasm-pack test --chrome --firefox --headless
+
+  - name: www
+    image: node:latest
+    pull: if-not-exists
+    commands:
+      - cd ./www
+      - npm ci
+      - npm run build
+
+  - name: test
+    image: rust:latest
+    pull: if-not-exists
+    environment:
+      RUST_BACKTRACE: 1
+    commands:
+      - cargo build --verbose --all
+      - cargo test --verbose --all
