@@ -7,7 +7,9 @@
     "create-wasm-app": ".bin/create-wasm-app.js"
   },
   "scripts": {
-    "build": "npx webpack --config webpack.config.js",
+    "build:dev": "npx webpack --config webpack.dev.js",
+    "build:prod": "npx webpack --config webpack.prod.js",
+    "build": "npm run build:prod",
     "start": "npx webpack serve",
     "lint": "npm run lint:styles && npm run lint:html && npm run lint:js",
     "lint:js": "npx eslint --ext .js",
@@ -66,6 +68,7 @@
     "tailwindcss": "^2.1.1",
     "webpack": "^4.46.0",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
   }
 }

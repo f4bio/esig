@@ -1,7 +1,6 @@
 const path = require("path");
 const { SourceMapDevToolPlugin } = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 
@@ -10,10 +9,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bootstrap.js"
-  },
-  node: {
-    Buffer: false,
-    process: false
   },
   mode: "development",
   module: {
@@ -42,11 +37,11 @@ module.exports = {
     new FaviconsWebpackPlugin("./assets/esig.png"),
     new HtmlWebpackPlugin({
       template: "index.html"
-    }),
-    new CopyPlugin({
-      patterns: [
-        { from: "index.html" }
-      ]
     })
+    // new CopyPlugin({
+    //   patterns: [
+    //     { from: "index.html" }
+    //   ]
+    // })
   ]
 };
