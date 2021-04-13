@@ -9,32 +9,8 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
 @import "~highlight.js/scss/github";
 
-.tab {
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(0, 50px);
-}
-
-.active-tab, .active-button {
-  transition: transform 0.2s, background 0.2s, color 0.2s;
-}
-
-.active-tab {
-  visibility: visible;
-  opacity: 1;
-  transform: translate(0, 0);
-  z-index: 99;
-}
-
-.active-button {
-  background: white !important;
-  color: #3730a3;
-}
-
 .default-text-input {
   @apply
-  focus:ring-indigo-500
-  focus:border-indigo-500
   flex-1
   block
   w-full

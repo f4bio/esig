@@ -63,7 +63,6 @@ impl SignatureTemplate {
         position: &str,
         phone_input: &str,
         email_input: &str,
-        linkedin_input: &str,
         website_input: &str,
     ) -> String {
         let user = User {
@@ -81,11 +80,6 @@ impl SignatureTemplate {
             url: format!("mailto:{}", email_input.to_string()),
         };
 
-        let linkedin = Link {
-            pretty: linkedin_input.to_string(),
-            url: format!("https://www.{}", linkedin_input.to_string()),
-        };
-
         let website = Link {
             pretty: website_input.to_string(),
             url: format!("https://www.{}", website_input),
@@ -95,9 +89,8 @@ impl SignatureTemplate {
         context.insert("user", &user);
         context.insert("phone", &phone);
         context.insert("email", &email);
-        context.insert("linkedin", &linkedin);
         context.insert("website", &website);
 
-        Tera::one_off(self.get_template_string().as_str(), &context, true).unwrap()
+        Tera::one_off(self.get_template_string().as_str(), &context, false).unwrap()
     }
 }

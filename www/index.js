@@ -1,13 +1,14 @@
+import "@ryangjchandler/alpine-clipboard";
+import "alpinejs";
 import "./style.scss";
-
 // eslint-disable-next-line import/no-unresolved
 import { SignatureTemplate } from "esig";
 import hljs from "highlight.js/lib/core";
 
 hljs.registerLanguage("html", require("highlight.js/lib/languages/xml"));
 
-const signaturePre = document.querySelector("#signature-pre");
-const signatureText = document.querySelector("#signature-text");
+const signaturePre = document.querySelector("#signaturePre");
+const signatureText = document.querySelector("#signatureText");
 const signatureTemplate = SignatureTemplate.new();
 
 // eslint-disable-next-line no-unused-vars
@@ -16,7 +17,6 @@ const doUpdate = () => {
   const position = document.getElementById("position").value;
   const phone = document.getElementById("phone").value;
   const email = document.getElementById("email").value;
-  const linkedin = document.getElementById("linkedin").value;
   const website = document.getElementById("website").value;
 
   const result = signatureTemplate.interpolate(
@@ -24,7 +24,6 @@ const doUpdate = () => {
     position,
     phone,
     email,
-    linkedin,
     website
   );
   signaturePre.textContent = result;
@@ -34,7 +33,6 @@ const doUpdate = () => {
 };
 
 document.querySelector("#copy2clipboard").addEventListener("click", () => {
-  //here code
   signatureText.select();
   document.execCommand("copy");
 });
@@ -47,13 +45,12 @@ document.querySelector("#result-pane").addEventListener("mouseleave", () => {
   document.querySelector("#copy2clipboard").classList.add("hidden");
 });
 
-document.querySelector(".default-text-input").addEventListener("input", () => {
-  //here code
-  doUpdate();
+document.querySelectorAll(".default-text-input").forEach((inputElement) => {
+  inputElement.addEventListener("input", () => {
+    doUpdate();
+  });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  //here code
-  console.log("DOM content loaded!");
   doUpdate();
 });
