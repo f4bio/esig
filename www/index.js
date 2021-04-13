@@ -1,18 +1,22 @@
-import "@ryangjchandler/alpine-clipboard";
-import "alpinejs";
 import "./style.scss";
-// eslint-disable-next-line import/no-unresolved
-import { SignatureTemplate } from "esig";
 import hljs from "highlight.js/lib/core";
+import { SignatureTemplate } from "esig";
+import wasmLogo from "./assets/webassembly-icon.svg";
+import rustLogo from "./assets/rust-lang-icon.png";
 
 hljs.registerLanguage("html", require("highlight.js/lib/languages/xml"));
 
-const signaturePre = document.querySelector("#signaturePre");
-const signatureText = document.querySelector("#signatureText");
+document.querySelector("#rustLangIcon").src = rustLogo;
+document.querySelector("#webassemblyIcon").src = wasmLogo;
+
+const signatureCode = document.querySelector("#signatureCode");
+const signatureWysiwyg = document.querySelector("#signatureWysiwyg");
 const signatureTemplate = SignatureTemplate.new();
 
+console.log(signatureCode);
+
 // eslint-disable-next-line no-unused-vars
-const doUpdate = () => {
+export const doUpdate = () => {
   const name = document.getElementById("name").value;
   const position = document.getElementById("position").value;
   const phone = document.getElementById("phone").value;
@@ -26,23 +30,35 @@ const doUpdate = () => {
     email,
     website
   );
-  signaturePre.textContent = result;
-  signatureText.textContent = result;
 
-  hljs["highlightElement"](signaturePre);
+  signatureCode.querySelector("code").textContent = result;
+  signatureWysiwyg.innerHTML = result;
+  hljs["highlightElement"](signatureCode.querySelector("code"));
+};
+
+// eslint-disable-next-line no-unused-vars
+const setClipboard = (value) => {
+  var tempInput = document.createElement("input");
+  tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+  tempInput.value = value;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempInput);
 };
 
 document.querySelector("#copy2clipboard").addEventListener("click", () => {
-  signatureText.select();
-  document.execCommand("copy");
+  setClipboard(signatureCode.querySelector("code").textContent);
 });
 
-document.querySelector("#result-pane").addEventListener("mouseenter", () => {
-  document.querySelector("#copy2clipboard").classList.remove("hidden");
+document.querySelector("#code").addEventListener("click", () => {
+  signatureWysiwyg.classList.add("hidden");
+  signatureCode.classList.remove("hidden");
 });
 
-document.querySelector("#result-pane").addEventListener("mouseleave", () => {
-  document.querySelector("#copy2clipboard").classList.add("hidden");
+document.querySelector("#wysiwyg").addEventListener("click", () => {
+  signatureWysiwyg.classList.remove("hidden");
+  signatureCode.classList.add("hidden");
 });
 
 document.querySelectorAll(".default-text-input").forEach((inputElement) => {
@@ -51,6 +67,5 @@ document.querySelectorAll(".default-text-input").forEach((inputElement) => {
   });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  doUpdate();
-});
+signatureCode.classList.remove("hidden");
+doUpdate();

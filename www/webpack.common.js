@@ -1,6 +1,7 @@
 const path = require("path");
 const { SourceMapDevToolPlugin } = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 
@@ -8,22 +9,25 @@ module.exports = {
   entry: "./bootstrap.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bootstrap.js"
+    filename: "bootstrap.js",
   },
   mode: "development",
   module: {
     rules: [
       {
         test: /\.s[ac]ss$/i,
+        use: ["style-loader", "css-loader", "sass-loader", "postcss-loader"]
+      },
+      {
+        test: /\.(png|jpe?g|webp|git|svg|)$/i,
         use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader",
-          "postcss-loader"
+          {
+            loader: "img-optimize-loader"
+          }
         ]
       },
       {
-        test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
         loader: "file-loader",
         options: {
           outputPath: "fonts"
@@ -35,8 +39,14 @@ module.exports = {
     new SourceMapDevToolPlugin(),
     new CleanWebpackPlugin(),
     new FaviconsWebpackPlugin("./assets/esig.png"),
+    // new CopyPlugin({
+    //   patterns: [
+    //     { from: "./assets/webassembly-icon.svg", to: "assets/" },
+    //     { from: "./assets/rust-lang-icon.png", to: "assets/" },
+    //   ],
+    // }),
     new HtmlWebpackPlugin({
-      template: "index.html"
-    })
-  ]
+      template: "index.html",
+    }),
+  ],
 };

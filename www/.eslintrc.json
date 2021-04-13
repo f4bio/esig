@@ -84,8 +84,7 @@
       "warn",
       {
         "ignore": [
-          "^@shared/",
-          "^@environment/"
+          "^esig"
         ]
       }
     ]
