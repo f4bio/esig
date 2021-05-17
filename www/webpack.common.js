@@ -1,7 +1,6 @@
 const path = require("path");
 const { SourceMapDevToolPlugin } = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 
@@ -9,7 +8,7 @@ module.exports = {
   entry: "./bootstrap.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bootstrap.js",
+    filename: "bootstrap.js"
   },
   mode: "development",
   module: {
@@ -35,6 +34,9 @@ module.exports = {
       }
     ]
   },
+  experiments: {
+    asyncWebAssembly: true
+  },
   plugins: [
     new SourceMapDevToolPlugin(),
     new CleanWebpackPlugin(),
@@ -46,7 +48,7 @@ module.exports = {
     //   ],
     // }),
     new HtmlWebpackPlugin({
-      template: "index.html",
-    }),
-  ],
+      template: "index.html"
+    })
+  ]
 };
