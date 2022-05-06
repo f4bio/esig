@@ -21,7 +21,7 @@ RUN npm run build:prod
 FROM nginx:alpine
 
 LABEL maintainer="Fabio Tea <iam@f4b.io>"
-LABEL version="0.0.1"
+LABEL version="0.0.2"
 
 COPY ./nginx_mime.types /etc/nginx/mime.types
 COPY --from=1 /app/www/dist /usr/share/nginx/html

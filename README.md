@@ -1,18 +1,25 @@
-# blog
+# SystemlessDebloat Config Manager
 
-> my blog
+> rust+wasm app
 
 ## login
 
-`$ docker login registry.gitlab.com`
+```bash
+\$ docker login registry.gitlab.com
+```
 
 ### build image
 
-`$ docker build --no-cache -t registry.gitlab.com/f4b.io/esig .`
+```bash
+\$ docker build --no-cache \
+        --tag registry.gitlab.com/f4bio/systemlessdebloat-config-manager:latest .
+```
 
 ## push image
 
-`$ docker push registry.gitlab.com/f4b.io/esig`
+```bash
+\$ docker push registry.gitlab.com/f4bio/systemlessdebloat-config-manager
+```
 
 ## signature
 
